@@ -1,0 +1,17 @@
+syntax = "proto3";
+package bilge.bilge;
+
+import "amino/amino.proto";
+import "gogoproto/gogo.proto";
+import "bilge/bilge/params.proto";
+
+option go_package = "bilge/x/bilge/types";
+
+// GenesisState defines the bilge module's genesis state.
+message GenesisState {
+  // params defines all the parameters of the module.
+  Params params = 1 [
+    (gogoproto.nullable) = false,
+    (amino.dont_omitempty) = true
+  ];
+}

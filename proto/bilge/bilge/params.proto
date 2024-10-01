@@ -1,0 +1,15 @@
+syntax = "proto3";
+package bilge.bilge;
+
+import "amino/amino.proto";
+import "gogoproto/gogo.proto";
+
+option go_package = "bilge/x/bilge/types";
+
+// Params defines the parameters for the module.
+message Params {
+  option (amino.name) = "bilge/x/bilge/Params";
+  option (gogoproto.equal) = true;
+
+  
+}
