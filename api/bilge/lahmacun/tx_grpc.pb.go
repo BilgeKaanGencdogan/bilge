@@ -2,9 +2,9 @@
 // versions:
 // - protoc-gen-go-grpc v1.3.0
 // - protoc             (unknown)
-// source: bilge/bilge/tx.proto
+// source: bilge/lahmacun/tx.proto
 
-package bilge
+package lahmacun
 
 import (
 	context "context"
@@ -19,7 +19,9 @@ import (
 const _ = grpc.SupportPackageIsVersion7
 
 const (
-	Msg_UpdateParams_FullMethodName = "/bilge.bilge.Msg/UpdateParams"
+	Msg_UpdateParams_FullMethodName   = "/bilge.lahmacun.Msg/UpdateParams"
+	Msg_CreateLahmacun_FullMethodName = "/bilge.lahmacun.Msg/CreateLahmacun"
+	Msg_UpdateLahmacun_FullMethodName = "/bilge.lahmacun.Msg/UpdateLahmacun"
 )
 
 // MsgClient is the client API for Msg service.
@@ -29,6 +31,8 @@ type MsgClient interface {
 	// UpdateParams defines a (governance) operation for updating the module
 	// parameters. The authority defaults to the x/gov module account.
 	UpdateParams(ctx context.Context, in *MsgUpdateParams, opts ...grpc.CallOption) (*MsgUpdateParamsResponse, error)
+	CreateLahmacun(ctx context.Context, in *MsgCreateLahmacun, opts ...grpc.CallOption) (*MsgCreateLahmacunResponse, error)
+	UpdateLahmacun(ctx context.Context, in *MsgUpdateLahmacun, opts ...grpc.CallOption) (*MsgUpdateLahmacunResponse, error)
 }
 
 type msgClient struct {
@@ -48,6 +52,24 @@ func (c *msgClient) UpdateParams(ctx context.Context, in *MsgUpdateParams, opts 
 	return out, nil
 }
 
+func (c *msgClient) CreateLahmacun(ctx context.Context, in *MsgCreateLahmacun, opts ...grpc.CallOption) (*MsgCreateLahmacunResponse, error) {
+	out := new(MsgCreateLahmacunResponse)
+	err := c.cc.Invoke(ctx, Msg_CreateLahmacun_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *msgClient) UpdateLahmacun(ctx context.Context, in *MsgUpdateLahmacun, opts ...grpc.CallOption) (*MsgUpdateLahmacunResponse, error) {
+	out := new(MsgUpdateLahmacunResponse)
+	err := c.cc.Invoke(ctx, Msg_UpdateLahmacun_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // MsgServer is the server API for Msg service.
 // All implementations must embed UnimplementedMsgServer
 // for forward compatibility
@@ -55,6 +77,8 @@ type MsgServer interface {
 	// UpdateParams defines a (governance) operation for updating the module
 	// parameters. The authority defaults to the x/gov module account.
 	UpdateParams(context.Context, *MsgUpdateParams) (*MsgUpdateParamsResponse, error)
+	CreateLahmacun(context.Context, *MsgCreateLahmacun) (*MsgCreateLahmacunResponse, error)
+	UpdateLahmacun(context.Context, *MsgUpdateLahmacun) (*MsgUpdateLahmacunResponse, error)
 	mustEmbedUnimplementedMsgServer()
 }
 
@@ -64,6 +88,12 @@ type UnimplementedMsgServer struct {
 
 func (UnimplementedMsgServer) UpdateParams(context.Context, *MsgUpdateParams) (*MsgUpdateParamsResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method UpdateParams not implemented")
+}
+func (UnimplementedMsgServer) CreateLahmacun(context.Context, *MsgCreateLahmacun) (*MsgCreateLahmacunResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method CreateLahmacun not implemented")
+}
+func (UnimplementedMsgServer) UpdateLahmacun(context.Context, *MsgUpdateLahmacun) (*MsgUpdateLahmacunResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method UpdateLahmacun not implemented")
 }
 func (UnimplementedMsgServer) mustEmbedUnimplementedMsgServer() {}
 
@@ -96,18 +126,62 @@ func _Msg_UpdateParams_Handler(srv interface{}, ctx context.Context, dec func(in
 	return interceptor(ctx, in, info, handler)
 }
 
+func _Msg_CreateLahmacun_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(MsgCreateLahmacun)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(MsgServer).CreateLahmacun(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: Msg_CreateLahmacun_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(MsgServer).CreateLahmacun(ctx, req.(*MsgCreateLahmacun))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _Msg_UpdateLahmacun_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(MsgUpdateLahmacun)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(MsgServer).UpdateLahmacun(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: Msg_UpdateLahmacun_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(MsgServer).UpdateLahmacun(ctx, req.(*MsgUpdateLahmacun))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // Msg_ServiceDesc is the grpc.ServiceDesc for Msg service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
 var Msg_ServiceDesc = grpc.ServiceDesc{
-	ServiceName: "bilge.bilge.Msg",
+	ServiceName: "bilge.lahmacun.Msg",
 	HandlerType: (*MsgServer)(nil),
 	Methods: []grpc.MethodDesc{
 		{
 			MethodName: "UpdateParams",
 			Handler:    _Msg_UpdateParams_Handler,
 		},
+		{
+			MethodName: "CreateLahmacun",
+			Handler:    _Msg_CreateLahmacun_Handler,
+		},
+		{
+			MethodName: "UpdateLahmacun",
+			Handler:    _Msg_UpdateLahmacun_Handler,
+		},
 	},
 	Streams:  []grpc.StreamDesc{},
-	Metadata: "bilge/bilge/tx.proto",
+	Metadata: "bilge/lahmacun/tx.proto",
 }

@@ -1,0 +1,32 @@
+syntax = "proto3";
+package bilge.lahmacun;
+
+import "amino/amino.proto";
+import "cosmos/msg/v1/msg.proto";
+import "cosmos_proto/cosmos.proto";
+import "gogoproto/gogo.proto";
+import "bilge/lahmacun/params.proto";
+
+option go_package = "bilge/x/lahmacun/types";
+
+message Lahmacun {
+	string creator = 1;
+	string id = 2;
+	string heat = 3;
+	string dough = 4;
+	string meat = 5;
+	string tomato = 6;
+	string onion = 7;
+}
+
+enum SpiceLevel {
+	MILD = 0;
+	MEDIUM = 1;
+	HOT = 2;
+}
+
+
+
+
+
+

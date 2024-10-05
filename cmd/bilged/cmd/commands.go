@@ -24,6 +24,7 @@ import (
 	"github.com/spf13/viper"
 
 	"bilge/app"
+	"bilge/x/lahmacun/client/cli"
 )
 
 func initRootCmd(
@@ -110,6 +111,8 @@ func txCommand() *cobra.Command {
 		authcmd.GetEncodeCommand(),
 		authcmd.GetDecodeCommand(),
 		authcmd.GetSimulateCmd(),
+		cli.CmdCreateLahmacun(),
+		cli.CmdUpdateLahmacun(),
 	)
 	cmd.PersistentFlags().String(flags.FlagChainID, "", "The network chain ID")
 

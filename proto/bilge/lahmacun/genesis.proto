@@ -1,0 +1,21 @@
+syntax = "proto3";
+package bilge.lahmacun;
+
+import "amino/amino.proto";
+import "bilge/lahmacun/lahmacun.proto";
+import "gogoproto/gogo.proto";
+import "bilge/lahmacun/params.proto";
+
+option go_package = "bilge/x/lahmacun/types";
+
+// GenesisState defines the lahmacun module's genesis state.
+message GenesisState {
+  // params defines all the parameters of the module.
+
+  repeated Lahmacun lahmacun_list = 1;
+
+  Params params = 2 [
+    (gogoproto.nullable) = false,
+    (amino.dont_omitempty) = true
+  ];
+}

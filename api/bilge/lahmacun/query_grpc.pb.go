@@ -2,9 +2,9 @@
 // versions:
 // - protoc-gen-go-grpc v1.3.0
 // - protoc             (unknown)
-// source: bilge/bilge/query.proto
+// source: bilge/lahmacun/query.proto
 
-package bilge
+package lahmacun
 
 import (
 	context "context"
@@ -19,7 +19,8 @@ import (
 const _ = grpc.SupportPackageIsVersion7
 
 const (
-	Query_Params_FullMethodName = "/bilge.bilge.Query/Params"
+	Query_Params_FullMethodName   = "/bilge.lahmacun.Query/Params"
+	Query_Lahmacun_FullMethodName = "/bilge.lahmacun.Query/Lahmacun"
 )
 
 // QueryClient is the client API for Query service.
@@ -28,6 +29,7 @@ const (
 type QueryClient interface {
 	// Parameters queries the parameters of the module.
 	Params(ctx context.Context, in *QueryParamsRequest, opts ...grpc.CallOption) (*QueryParamsResponse, error)
+	Lahmacun(ctx context.Context, in *QueryLahmacunRequest, opts ...grpc.CallOption) (*QueryLahmacunResponse, error)
 }
 
 type queryClient struct {
@@ -47,12 +49,22 @@ func (c *queryClient) Params(ctx context.Context, in *QueryParamsRequest, opts .
 	return out, nil
 }
 
+func (c *queryClient) Lahmacun(ctx context.Context, in *QueryLahmacunRequest, opts ...grpc.CallOption) (*QueryLahmacunResponse, error) {
+	out := new(QueryLahmacunResponse)
+	err := c.cc.Invoke(ctx, Query_Lahmacun_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // QueryServer is the server API for Query service.
 // All implementations must embed UnimplementedQueryServer
 // for forward compatibility
 type QueryServer interface {
 	// Parameters queries the parameters of the module.
 	Params(context.Context, *QueryParamsRequest) (*QueryParamsResponse, error)
+	Lahmacun(context.Context, *QueryLahmacunRequest) (*QueryLahmacunResponse, error)
 	mustEmbedUnimplementedQueryServer()
 }
 
@@ -62,6 +74,9 @@ type UnimplementedQueryServer struct {
 
 func (UnimplementedQueryServer) Params(context.Context, *QueryParamsRequest) (*QueryParamsResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method Params not implemented")
+}
+func (UnimplementedQueryServer) Lahmacun(context.Context, *QueryLahmacunRequest) (*QueryLahmacunResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method Lahmacun not implemented")
 }
 func (UnimplementedQueryServer) mustEmbedUnimplementedQueryServer() {}
 
@@ -94,18 +109,40 @@ func _Query_Params_Handler(srv interface{}, ctx context.Context, dec func(interf
 	return interceptor(ctx, in, info, handler)
 }
 
+func _Query_Lahmacun_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(QueryLahmacunRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(QueryServer).Lahmacun(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: Query_Lahmacun_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(QueryServer).Lahmacun(ctx, req.(*QueryLahmacunRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // Query_ServiceDesc is the grpc.ServiceDesc for Query service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
 var Query_ServiceDesc = grpc.ServiceDesc{
-	ServiceName: "bilge.bilge.Query",
+	ServiceName: "bilge.lahmacun.Query",
 	HandlerType: (*QueryServer)(nil),
 	Methods: []grpc.MethodDesc{
 		{
 			MethodName: "Params",
 			Handler:    _Query_Params_Handler,
 		},
+		{
+			MethodName: "Lahmacun",
+			Handler:    _Query_Lahmacun_Handler,
+		},
 	},
 	Streams:  []grpc.StreamDesc{},
-	Metadata: "bilge/bilge/query.proto",
+	Metadata: "bilge/lahmacun/query.proto",
 }

@@ -76,6 +76,8 @@ import (
 	ibckeeper "github.com/cosmos/ibc-go/v8/modules/core/keeper"
 
 	bilgemodulekeeper "bilge/x/bilge/keeper"
+	lahmacunmodulekeeper "bilge/x/lahmacun/keeper"
+
 	// this line is used by starport scaffolding # stargate/app/moduleImport
 
 	"bilge/docs"
@@ -141,11 +143,14 @@ type App struct {
 	ScopedICAHostKeeper       capabilitykeeper.ScopedKeeper
 	ScopedKeepers             map[string]capabilitykeeper.ScopedKeeper
 
-	BilgeKeeper bilgemodulekeeper.Keeper
+	BilgeKeeper    bilgemodulekeeper.Keeper
+	LahmacunKeeper lahmacunmodulekeeper.Keeper
 	// this line is used by starport scaffolding # stargate/app/keeperDeclaration
 
 	// simulation manager
 	sm *module.SimulationManager
+
+	keys map[string]*storetypes.KVStoreKey
 }
 
 func init() {
@@ -197,7 +202,8 @@ func New(
 	baseAppOptions ...func(*baseapp.BaseApp),
 ) (*App, error) {
 	var (
-		app        = &App{ScopedKeepers: make(map[string]capabilitykeeper.ScopedKeeper)}
+		app = &App{ScopedKeepers: make(map[string]capabilitykeeper.ScopedKeeper)}
+
 		appBuilder *runtime.AppBuilder
 
 		// merge the AppConfig and other configuration in one config
@@ -246,6 +252,7 @@ func New(
 		&app.GroupKeeper,
 		&app.CircuitBreakerKeeper,
 		&app.BilgeKeeper,
+		&app.LahmacunKeeper,
 		// this line is used by starport scaffolding # stargate/app/keeperDefinition
 	); err != nil {
 		panic(err)

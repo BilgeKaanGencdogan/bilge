@@ -54,8 +54,11 @@ import (
 	"google.golang.org/protobuf/types/known/durationpb"
 
 	bilgemodulev1 "bilge/api/bilge/bilge/module"
+	lahmacunmodulev1 "bilge/api/bilge/lahmacun/module"
 	_ "bilge/x/bilge/module" // import for side-effects
 	bilgemoduletypes "bilge/x/bilge/types"
+	_ "bilge/x/lahmacun/module" // import for side-effects
+	lahmacunmoduletypes "bilge/x/lahmacun/types"
 	// this line is used by starport scaffolding # stargate/app/moduleImport
 )
 
@@ -94,6 +97,7 @@ var (
 		circuittypes.ModuleName,
 		// chain modules
 		bilgemoduletypes.ModuleName,
+		lahmacunmoduletypes.ModuleName,
 		// this line is used by starport scaffolding # stargate/app/initGenesis
 	}
 
@@ -119,6 +123,7 @@ var (
 		ibcfeetypes.ModuleName,
 		// chain modules
 		bilgemoduletypes.ModuleName,
+		lahmacunmoduletypes.ModuleName,
 		// this line is used by starport scaffolding # stargate/app/beginBlockers
 	}
 
@@ -138,6 +143,7 @@ var (
 		ibcfeetypes.ModuleName,
 		// chain modules
 		bilgemoduletypes.ModuleName,
+		lahmacunmoduletypes.ModuleName,
 		// this line is used by starport scaffolding # stargate/app/endBlockers
 	}
 
@@ -296,6 +302,10 @@ var (
 			{
 				Name:   bilgemoduletypes.ModuleName,
 				Config: appconfig.WrapAny(&bilgemodulev1.Module{}),
+			},
+			{
+				Name:   lahmacunmoduletypes.ModuleName,
+				Config: appconfig.WrapAny(&lahmacunmodulev1.Module{}),
 			},
 			// this line is used by starport scaffolding # stargate/app/moduleConfig
 		},

@@ -1,0 +1,44 @@
+syntax = "proto3";
+package bilge.lahmacun;
+
+import "amino/amino.proto";
+import "gogoproto/gogo.proto";
+import "google/api/annotations.proto";
+import "cosmos/base/query/v1beta1/pagination.proto";
+import "bilge/lahmacun/params.proto";
+import "bilge/lahmacun/lahmacun.proto";
+
+option go_package = "bilge/x/lahmacun/types";
+
+// Query defines the gRPC querier service.
+service Query {
+  // Parameters queries the parameters of the module.
+  rpc Params(QueryParamsRequest) returns (QueryParamsResponse) {
+    option (google.api.http).get = "/bilge/lahmacun/params";
+  }
+
+
+  rpc Lahmacun(QueryLahmacunRequest) returns (QueryLahmacunResponse) {
+    option (google.api.http).get = "/bilge/lahmacun/lahmacun/{id}";
+  }
+}
+
+// QueryParamsRequest is request type for the Query/Params RPC method.
+message QueryParamsRequest {}
+
+// QueryParamsResponse is response type for the Query/Params RPC method.
+message QueryParamsResponse {
+  // params holds all the parameters of this module.
+  Params params = 1 [
+    (gogoproto.nullable) = false,
+    (amino.dont_omitempty) = true
+  ];
+}
+message QueryLahmacunRequest {
+  string id = 1;
+}
+
+
+message QueryLahmacunResponse {
+  Lahmacun lahmacun = 1;
+}
